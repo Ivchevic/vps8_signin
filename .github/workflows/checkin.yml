@@ -4,6 +4,10 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '52 0 * * *' # 北京时间 08:30
+    
+permissions:
+  actions: write
+  contents: read
 
 jobs:
   checkin:
