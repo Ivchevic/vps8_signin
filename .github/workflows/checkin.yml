@@ -12,11 +12,8 @@ jobs:
       - name: 检出私有仓库代码
         uses: actions/checkout@v4
         with:
-          # 修改为你的 GitHub 用户名/私有仓库名
           repository: acwea904/vps8_signin_Private
-          # 使用你在 Secrets 中配置的令牌
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
-          # 检出到当前路径
           path: private_code
 
       - name: 设置 Python 环境
@@ -36,7 +33,6 @@ jobs:
           VPS8_ACCOUNT: ${{ secrets.VPS8_ACCOUNT }}
           TG_BOT: ${{ secrets.TG_BOT }}
         run: |
-          # 注意：因为上面使用了 path: private_code，所以这里要进入该目录运行
           cd private_code
           xvfb-run --auto-servernum python vps8_signin.py
 
@@ -47,3 +43,13 @@ jobs:
           name: Checkin-Screenshots
           path: private_code/checkin_result_*.png
           retention-days: 7
+          
+      - name: 清理历史运行记录
+        if: always()
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          delete_workflow_pattern: ${{ github.workflow }}
+          retain_days: 0
+          keep_minimum_runs: 2
