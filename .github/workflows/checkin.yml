@@ -3,14 +3,14 @@ name: VPS8 Private Pull Checkin
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30 0 * * *' # 北京时间 08:30
+    - cron: '52 0 * * *' # 北京时间 08:30
 
 jobs:
   checkin:
     runs-on: ubuntu-latest
     steps:
       - name: 检出私有仓库代码
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           # 修改为你的 GitHub 用户名/私有仓库名
           repository: acwea904/vps8_signin_Private
